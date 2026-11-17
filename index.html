@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hxF0hdl6GNAKkdDAi7YXu7thq13HlHxo8d773+0ouV0=' https://sdk.scdn.co; style-src 'sha256-ieBuz90IyIAkr4KnFWy4eXbU+TWWmG1BXiSecBtGQ3k=' 'sha256-TszCSj3JywgMIp2/pxbKDcWFuEo7tR95/t/sFHVg9BM='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-W4tdJ6rsmxCtTzJQ8x62wE2ihUftYfxoQz9wKQ2PCYg=' https://sdk.scdn.co; style-src 'sha256-ieBuz90IyIAkr4KnFWy4eXbU+TWWmG1BXiSecBtGQ3k=' 'sha256-TszCSj3JywgMIp2/pxbKDcWFuEo7tR95/t/sFHVg9BM='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -915,11 +915,11 @@ function armTo(deg, slow = false) {
   a.style.transform = `translateZ(30px) rotate(${deg}deg)`;
 }
 
-/* 레코드 회전: 33⅓ RPM = 200°/초 (가속·감속 포함). 메인 창/미니 창이 각자의 루프에서 호출 */
+/* 레코드 회전: 커버가 보이는 디자인이라 실제 33⅓ RPM(200°/초)보다 느린 120°/초 (가속·감속 포함). 메인 창/미니 창이 각자의 루프에서 호출 */
 let ang = 0, omega = 0, lastT = performance.now(), lastSec = -1;
 function tick() {
   const now = performance.now(), dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
-  omega += ((uiPlaying ? 200 : 0) - omega) * (1 - Math.exp(-dt * (uiPlaying ? 1.8 : 1.1)));
+  omega += ((uiPlaying ? 120 : 0) - omega) * (1 - Math.exp(-dt * (uiPlaying ? 1.8 : 1.1)));
   if (omega < 0.05 && !uiPlaying) omega = 0;
   ang = (ang + omega * dt) % 360; return now;
 }
