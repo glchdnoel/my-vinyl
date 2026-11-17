@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-GK8NIUvubrn2G0ZraidfQn2rUDhHecQ7H8SAnOsdAH8=' https://sdk.scdn.co; style-src 'sha256-PNMPkutlRhmlXh9dBjhGE3kTnqJDay5GNBh0ni87mrc=' 'sha256-VYXW9bbySkY8lhI3nlxoNhRZTctSe+9s4ER80FWDLxo='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-PQn495ZF8uEELZDYnG2C2nQJZxOg5XhRncWLZuxy4lM=' https://sdk.scdn.co; style-src 'sha256-5SkRrKiEsZl2Ouz3kP2GiupRWtFgwqRStQ4WfBJBUdQ=' 'sha256-ZX2K51zhcxkHSC+EdVrMc1lzPDkGMmk8bJGYhwtc+TU='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -67,6 +67,9 @@
     background: radial-gradient(circle, var(--accent) 0 22%, #111 24% 100%); box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
   .hbtn { min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,.09);
     font-size: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: background .2s; }
+  .ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .ic.f { fill: currentColor; stroke: none; }
+  .hbtn { color: #e8e3df; }
   .hbtn.off { opacity: .5; }
   .hbtn.on { background: rgba(255,255,255,.24); }
   .hgroup { display: flex; gap: 8px; align-items: center; }
@@ -102,7 +105,8 @@
   .caption { text-align: center; padding: 6px 20px 14px; flex: none; }
   .caption .t { font-size: 20px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .caption .a { font-size: 14px; color: #bbb; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .playbtn { margin-top: 12px; min-height: 48px; padding: 0 26px; border-radius: 999px; font-weight: 650; font-size: 15px; background: #f0ece8; color: #111; }
+  .playbtn { margin-top: 12px; min-height: 48px; padding: 0 26px; border-radius: 999px; font-weight: 650; font-size: 15px; background: #f0ece8; color: #111; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .playbtn .ic { width: 16px; height: 16px; }
   @media (hover: hover) { .playbtn:hover { transform: scale(1.04); } }
   .empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 14px; text-align: center; padding: 20px; }
 
@@ -189,7 +193,7 @@
   body[data-geo="p"] .knob { left: 296px; top: 436px; width: 50px; height: 50px; }
 
   #info { position: relative; z-index: 2; width: min(560px, 94%); flex: none; display: flex; flex-direction: column; align-items: center; }
-  .meta { text-align: center; padding: 0 16px; margin-top: 10px; width: 100%; }
+  .meta { text-align: left; padding: 0 18px; margin-top: 10px; width: 100%; }
   .meta .t { font-size: 20px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
   .meta .a { font-size: 14px; color: #c4c0bc; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
   .meta .dv { font-size: 12px; color: #9a9591; margin-top: 3px; min-height: 16px; }
@@ -197,11 +201,21 @@
   #seek { flex: 1; height: 44px; display: flex; align-items: center; cursor: pointer; touch-action: none; }
   #seek b { display: block; width: 100%; height: 5px; border-radius: 3px; background: rgba(255,255,255,.18); overflow: hidden; }
   #seek i { display: block; width: 100%; height: 100%; background: var(--accent); filter: brightness(1.2); transform-origin: 0 50%; transform: scaleX(0); }
-  .ctl { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 2px; }
-  .ctl button { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,.1); font-size: 16px; }
-  .ctl button.main { width: 58px; height: 58px; background: #f0ece8; color: #111; font-size: 20px; }
-  @media (hover: hover) { .ctl button:hover { background: rgba(255,255,255,.2); } .ctl button.main:hover { background: #fff; } }
-  .vol { display: flex; align-items: center; gap: 6px; margin-left: 14px; color: #aaa; font-size: 13px; }
+  .ctl { display: flex; align-items: flex-start; justify-content: flex-start; gap: 14px; margin-top: 6px; width: 100%; padding: 8px 20px 4px; }
+  .cb { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+  .cb > span { font-size: 10px; letter-spacing: .14em; color: rgba(255,255,255,.55); }
+  .cs { flex: 1; }
+  .ctl button { width: 80px; height: 48px; border-radius: 999px; display: flex; align-items: center; justify-content: center; color: #f0ece8;
+    background: linear-gradient(#222, #0e0e0e); box-shadow: 0 0 0 5px rgba(255,255,255,.07), 0 8px 16px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.12), inset 0 -3px 6px rgba(0,0,0,.6);
+    transition: transform .12s ease, box-shadow .12s ease; }
+  .ctl button.main { width: 92px; }
+  .ctl button:active { transform: translateY(2px) scale(.97); box-shadow: 0 0 0 5px rgba(255,255,255,.07), 0 2px 6px rgba(0,0,0,.5), inset 0 2px 6px rgba(0,0,0,.7); }
+  .ctl button .ic { width: 22px; height: 22px; }
+  .ctl button .ipa, .ctl button.pl .ip { display: none; }
+  .ctl button.pl .ipa { display: block; }
+  @media (hover: hover) { .ctl button:hover { background: linear-gradient(#2c2c2c, #151515); } }
+  .vol { display: flex; align-items: center; gap: 6px; margin-left: 4px; margin-top: 14px; color: #aaa; font-size: 13px; }
+  .vol .ic { width: 18px; height: 18px; }
   .vol[hidden] { display: none; }
   .vol input { width: 90px; accent-color: #ccc; }
 
@@ -212,10 +226,16 @@
   body[data-layout="pp"] #now { justify-content: flex-start; }
   body[data-layout="pp"] #stageWrap { margin-top: 34px; }
   body[data-layout="pp"] .vol { display: none; }
+  /* 폰 세로: 받침대 상자를 없애고 LP·톤암만 깔끔하게 */
+  body[data-layout="pp"] .plinth, body[data-layout="pp"] .platter, body[data-layout="pp"] .mount,
+  body[data-layout="pp"] .startbtn, body[data-layout="pp"] .led, body[data-layout="pp"] .tag, body[data-layout="pp"] .knob { display: none; }
+  body[data-layout="pp"] .record { box-shadow: 0 0 0 4px #070707, 0 14px 34px rgba(0,0,0,.65), 0 0 0 0 var(--glow); }
+  body[data-layout="pp"] .scene.playing .record { box-shadow: 0 0 0 4px #070707, 0 14px 34px rgba(0,0,0,.65), 0 0 50px 6px var(--glow); }
   body[data-layout="pp"] .plinth { box-shadow: 0 16px 30px rgba(0,0,0,.55), 0 0 0 0 var(--glow2), inset 0 0 0 2px rgba(255,255,255,.07); }
   body[data-layout="pp"] .scene.playing .plinth { box-shadow: 0 16px 30px rgba(0,0,0,.55), 0 0 50px 6px var(--glow2), inset 0 0 0 2px rgba(255,255,255,.1); }
   body[data-layout="pl"] { --hh: 52px; }
   body[data-layout="pl"] .lbl { display: none; }
+  body[data-layout="pl"] .ctl button { width: 64px; height: 42px; } body[data-layout="pl"] .ctl button.main { width: 72px; }
   body[data-layout="pl"] .hbtn { padding: 0; width: 44px; }
   body[data-layout="pl"] #now { flex-direction: row; gap: 18px; }
   body[data-layout="pl"] #info { width: min(360px, 42vw); }
@@ -283,12 +303,12 @@
 
 <header>
   <div class="brand" id="brand"><i></i>My Vinyl</div>
-  <button class="hbtn" id="back" hidden aria-label="보관함으로">←<span class="lbl">보관함</span></button>
+  <button class="hbtn" id="back" hidden aria-label="보관함으로"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span class="lbl">보관함</span></button>
   <div class="hgroup">
-    <button class="hbtn" id="deviceBtn" hidden aria-label="재생 기기 선택">📱<span class="lbl">기기</span></button>
-    <button class="hbtn" id="miniBtn" hidden aria-label="미니 플레이어">⧉<span class="lbl">미니 플레이어</span></button>
-    <button class="hbtn" id="crackleBtn" aria-label="LP 잡음">🎚<span class="lbl" id="crackleLbl">LP 잡음 켬</span></button>
-    <button class="hbtn" id="logoutBtn" aria-label="로그아웃">⏻<span class="lbl">로그아웃</span></button>
+    <button class="hbtn" id="deviceBtn" hidden aria-label="재생 기기 선택"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><span class="lbl">기기</span></button>
+    <button class="hbtn" id="miniBtn" hidden aria-label="미니 플레이어"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><rect x="12" y="11" width="6" height="5" rx="1" fill="currentColor" stroke="none"/></svg><span class="lbl">미니 플레이어</span></button>
+    <button class="hbtn" id="crackleBtn" aria-label="LP 잡음"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h8M18 8h2M4 16h2M12 16h8"/><circle cx="15" cy="8" r="2.2"/><circle cx="9" cy="16" r="2.2"/></svg><span class="lbl" id="crackleLbl">LP 잡음 켬</span></button>
+    <button class="hbtn" id="logoutBtn" aria-label="로그아웃"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v8"/><path d="M7 6.6a7.2 7.2 0 1 0 10 0"/></svg><span class="lbl">로그아웃</span></button>
   </div>
 </header>
 
@@ -306,7 +326,7 @@
   <div class="caption">
     <div class="t" id="capT">&nbsp;</div>
     <div class="a" id="capA">&nbsp;</div>
-    <button class="playbtn" id="putOn">▶ 턴테이블에 올리기</button>
+    <button class="playbtn" id="putOn"><svg class="ic f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>턴테이블에 올리기</span></button>
   </div>
 </section>
 
@@ -335,10 +355,11 @@
     <div class="meta"><div class="t" id="mT">재생 대기 중</div><div class="a" id="mA">&nbsp;</div><div class="dv" id="mDev"></div></div>
     <div class="seekrow"><span id="tCur">0:00</span><div id="seek"><b><i id="seekFill"></i></b></div><span id="tDur">0:00</span></div>
     <div class="ctl">
-      <button id="prev" aria-label="이전">⏮</button>
-      <button id="toggle" class="main" aria-label="재생/일시정지">▶</button>
-      <button id="next" aria-label="다음">⏭</button>
-      <div class="vol" id="volBox">🔈<input id="vol" type="range" min="0" max="1" step="0.01" aria-label="볼륨"></div>
+      <div class="cb"><button id="toggle" class="main" aria-label="재생/일시정지"><svg class="ic f ip" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><svg class="ic f ipa" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button><span id="tgLbl">PLAY</span></div>
+      <div class="cs"></div>
+      <div class="cb"><button id="prev" aria-label="이전 곡"><svg class="ic f" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button><span>PREV</span></div>
+      <div class="cb"><button id="next" aria-label="다음 곡"><svg class="ic f" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button><span>NEXT</span></div>
+      <div class="vol" id="volBox"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6"/></svg><input id="vol" type="range" min="0" max="1" step="0.01" aria-label="볼륨"></div>
     </div>
   </div>
 </section>
@@ -830,7 +851,7 @@ function fit() {
   else if (pl) s = Math.min((h - sf.t - sf.b - hh - 8) / sh, aw * 0.55 / sw);
   else s = Math.min((aw - 16) / (sw + 40), (h - sf.t - sf.b - hh - 205) / sh, 1.5);
   R.setProperty('--s', Math.max(0.3, s).toFixed(3));
-  R.setProperty('--rx', (pp || pl ? 12 : 18) + 'deg');
+  R.setProperty('--rx', (pp ? 0 : pl ? 12 : 18) + 'deg');
   ARM_START = pp ? 6 : 19; ARM_END = pp ? 26 : 38;
   armTo(uiPlaying ? ARM_START + (ARM_END - ARM_START) * progress() : 0);
   fitFlow();
@@ -877,7 +898,7 @@ $('chip').onclick = () => showView('now');
 function setUiPlaying(p) {
   if (p === uiPlaying) return;
   uiPlaying = p;
-  $('toggle').textContent = p ? '⏸' : '▶'; $('led').classList.toggle('on', p); $('scene').classList.toggle('playing', p);
+  $('toggle').classList.toggle('pl', p); $('tgLbl').textContent = p ? 'PAUSE' : 'PLAY'; $('led').classList.toggle('on', p); $('scene').classList.toggle('playing', p);
   setCrackle(p);
   if (p) { armTo(ARM_START + (ARM_END - ARM_START) * progress()); setTimeout(thump, 900); } else armTo(0);
 }
@@ -1007,11 +1028,11 @@ const remoteEngine = {
       paused: !j.is_playing, position: j.progress_ms || 0, duration: it.duration_ms || 0, name: clip(it.name), uri: it.uri,
       artists: clip((it.artists || []).map(a => a.name).join(', ') || it.show?.name || ''), img: safeImg(imgs?.[0]?.url),
     });
-    $('mDev').textContent = this.deviceName ? `📱 ${clip(this.deviceName, 40)}에서 재생` : '';
+    $('mDev').textContent = this.deviceName ? `${clip(this.deviceName, 40)}에서 재생` : '';
   },
   setDevice(d) {
     this.deviceId = d.id; this.deviceName = d.name; store.set('v_dev', d.id);
-    $('deviceBtn').title = clip(d.name, 40); $('mDev').textContent = d.name ? `📱 ${clip(d.name, 40)}에서 재생` : '';
+    $('deviceBtn').title = clip(d.name, 40); $('mDev').textContent = d.name ? `${clip(d.name, 40)}에서 재생` : '';
   },
   async devices() { const j = await api('/me/player/devices'); return (j?.devices || []).filter(d => d && d.id && !d.is_restricted); },
   async ensureDevice() {
@@ -1043,7 +1064,7 @@ const remoteEngine = {
 const E = MODE === 'sdk' ? sdkEngine : remoteEngine;
 
 /* 기기 선택 시트 (리모컨 모드) */
-const devIcon = t => t === 'Smartphone' ? '📱' : t === 'Computer' ? '💻' : t === 'Speaker' ? '🔊' : '🎵';
+const devIcon = t => t === 'Smartphone' ? '휴대폰' : t === 'Computer' ? '컴퓨터' : t === 'Speaker' ? '스피커' : '기기';
 async function openSheet(hint) {
   if (MODE !== 'remote') return;
   $('sheet').classList.add('show'); $('sheetHint').textContent = hint || 'Spotify 앱이 켜져 있는 기기가 여기에 나타나요.';
@@ -1053,7 +1074,7 @@ async function openSheet(hint) {
     if (!ds.length) { const p = document.createElement('p'); p.textContent = '보이는 기기가 없어요. Spotify 앱을 열고 아무 곡이나 잠깐 재생한 뒤 새로고침하세요.'; ul.appendChild(p); }
     ds.forEach(d => {
       const b = document.createElement('button'); b.className = 'dev' + (d.is_active ? ' act' : '');
-      b.textContent = `${devIcon(d.type)} ${clip(d.name, 60)}${d.is_active ? ' · 재생 중' : ''}`;
+      b.textContent = `${clip(d.name, 60)} · ${devIcon(d.type)}${d.is_active ? ' · 재생 중' : ''}`;
       b.onclick = async () => {
         try { await E.transfer(d.id, false); E.setDevice(d); $('sheet').classList.remove('show'); toast(clip(d.name, 40) + '(으)로 전환했어요'); }
         catch (e) { toast('전환 실패: ' + e.message, true); }
@@ -1142,9 +1163,13 @@ const MINI_CSS = `
   .bar { width: 270px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.15); margin-top: 12px; overflow: hidden; cursor: pointer; }
   .bar i { display: block; height: 100%; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--accent); filter: brightness(1.2); pointer-events: none; }
   .c { display: flex; gap: 14px; align-items: center; margin-top: 10px; }
-  .c button { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.09); font-size: 14px; }
-  .c button:hover { background: rgba(255,255,255,.18); }
-  .c button.m { width: 48px; height: 48px; background: #f0ece8; color: #111; font-size: 16px; }
+  .c button { width: 56px; height: 36px; border-radius: 999px; display: flex; align-items: center; justify-content: center; color: #f0ece8;
+    background: linear-gradient(#222, #0e0e0e); box-shadow: 0 0 0 3px rgba(255,255,255,.07), 0 4px 10px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.12); }
+  .c button:hover { background: linear-gradient(#2c2c2c, #151515); }
+  .c button.m { width: 64px; }
+  .ic { width: 16px; height: 16px; fill: currentColor; }
+  .c button .ipa, .c button.pl .ip { display: none; }
+  .c button.pl .ipa { display: block; }
 `;
 function buildMiniDom(d) {            // 외부 데이터를 HTML로 넣지 않고 DOM API만 사용
   const mk = (tag, cls, id, txt) => { const e = d.createElement(tag); if (cls) e.className = cls; if (id) e.id = id; if (txt != null) e.textContent = txt; return e; };
@@ -1152,7 +1177,13 @@ function buildMiniDom(d) {            // 외부 데이터를 HTML로 넣지 않�
   const arm = mk('div', 'arm', 'marm'); arm.append(mk('div', 'cw'), mk('div', 'tube'), mk('div', 'head'), mk('div', 'cap'));
   sc.append(rec, mk('div', 'sheen'), arm);
   const bar = mk('div', 'bar', 'mbar'); bar.append(mk('i', null, 'mfill'));
-  const c = mk('div', 'c'); c.append(mk('button', null, 'mprev', '⏮'), mk('button', 'm', 'mplay', '▶'), mk('button', null, 'mnext', '⏭'));
+  const NS = 'http://www.w3.org/2000/svg';
+  const ic = (dd, cls) => { const s = d.createElementNS(NS, 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('class', cls); const p = d.createElementNS(NS, 'path'); p.setAttribute('d', dd); s.appendChild(p); return s; };
+  const bPrev = mk('button', null, 'mprev'), bPlay = mk('button', 'm', 'mplay'), bNext = mk('button', null, 'mnext');
+  bPrev.setAttribute('aria-label', '이전 곡'); bPlay.setAttribute('aria-label', '재생/일시정지'); bNext.setAttribute('aria-label', '다음 곡');
+  bPrev.append(ic('M6 5h2v14H6zM20 5v14L9 12z', 'ic')); bNext.append(ic('M16 5h2v14h-2zM4 5v14l11-7z', 'ic'));
+  bPlay.append(ic('M8 5v14l11-7z', 'ic ip'), ic('M7 5h3.5v14H7zM13.5 5H17v14h-3.5z', 'ic ipa'));
+  const c = mk('div', 'c'); c.append(bPrev, bPlay, bNext);
   d.body.append(sc, mk('div', 't', 'mt', '재생 대기 중'), mk('div', 'a', 'ma', ' '), bar, c);
 }
 async function toggleMini() {
@@ -1195,7 +1226,7 @@ function updateMini() {
   const now = performance.now();
   if (now - miniArmAt > 1000 || miniPlayingLast !== uiPlaying) {
     miniArmAt = now; miniPlayingLast = uiPlaying;
-    mini.arm.style.transform = `rotate(${uiPlaying ? 22 + 20 * progress() : 0}deg)`; mini.play.textContent = uiPlaying ? '⏸' : '▶';
+    mini.arm.style.transform = `rotate(${uiPlaying ? 22 + 20 * progress() : 0}deg)`; mini.play.classList.toggle('pl', uiPlaying);
   }
 }
 $('miniBtn').onclick = toggleMini;
