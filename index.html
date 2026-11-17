@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hxF0hdl6GNAKkdDAi7YXu7thq13HlHxo8d773+0ouV0=' https://sdk.scdn.co; style-src 'sha256-klz8vIxm6aNfptXG7Sra8sozpMppTvEOW2BNM0qcHmo=' 'sha256-TszCSj3JywgMIp2/pxbKDcWFuEo7tR95/t/sFHVg9BM='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hxF0hdl6GNAKkdDAi7YXu7thq13HlHxo8d773+0ouV0=' https://sdk.scdn.co; style-src 'sha256-ieBuz90IyIAkr4KnFWy4eXbU+TWWmG1BXiSecBtGQ3k=' 'sha256-TszCSj3JywgMIp2/pxbKDcWFuEo7tR95/t/sFHVg9BM='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -161,12 +161,18 @@
   .startbtn { position: absolute; left: 34px; top: 470px; width: 80px; min-height: 44px; border-radius: 10px; font-size: 11px; letter-spacing: .08em;
     background: linear-gradient(#3a3a3a, #232323); color: #cfcfcf; box-shadow: 0 2px 0 #0b0b0b, inset 0 1px 0 rgba(255,255,255,.12); transform: translateZ(4px); }
   .startbtn:active { transform: translateZ(4px) translateY(2px); box-shadow: none; }
-  .knob { position: absolute; left: 508px; top: 440px; width: 56px; height: 56px; border-radius: 50%;
-    background: conic-gradient(from 0deg, #555, #222, #555, #222, #555); box-shadow: 0 3px 8px rgba(0,0,0,.6), inset 0 0 0 3px #181818;
-    display: flex; align-items: center; justify-content: center; font-size: 13px; color: #ddd; transform: translateZ(5px); }
   .led { position: absolute; left: 124px; top: 513px; width: 8px; height: 8px; border-radius: 50%; background: #3a2220; transition: background .3s, box-shadow .3s; transform: translateZ(5px); }
   .led.on { background: #5dff8f; box-shadow: 0 0 10px #5dff8f; }
-  .tag { position: absolute; left: 144px; top: 508px; font-size: 10px; line-height: 18px; letter-spacing: .3em; white-space: nowrap; color: rgba(255,255,255,.34); transform: translateZ(5px); }
+  .pitch { position: absolute; left: 176px; top: 492px; width: 210px; height: 34px; transform: translateZ(5px); }
+  .pitch .tr { position: absolute; left: 0; right: 0; top: 13px; height: 8px; border-radius: 4px; background: #060606; box-shadow: inset 0 1px 3px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.1); }
+  .pitch::before { content: ""; position: absolute; left: 4px; right: 4px; top: 27px; height: 6px; opacity: .45;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,.7) 0 1px, transparent 1px 10.5px); }
+  .pitch .cap { position: absolute; left: 90px; top: 3px; width: 26px; height: 28px; border-radius: 5px;
+    background: linear-gradient(90deg, #2a2a2a, #8a8a8a 45%, #1e1e1e); box-shadow: 0 4px 8px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.25); }
+  .pitch .cap::after { content: ""; position: absolute; left: 12px; top: 4px; width: 2px; height: 20px; background: #d6d6d6; box-shadow: 0 0 0 1px rgba(0,0,0,.4); }
+  .rest { position: absolute; left: 518px; top: 428px; width: 34px; height: 30px; border-radius: 7px 7px 14px 14px; transform: translateZ(4px);
+    background: linear-gradient(#333, #151515); box-shadow: 0 3px 8px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.14); }
+  .rest::after { content: ""; position: absolute; left: 9px; top: 6px; width: 16px; height: 12px; border-radius: 3px 3px 8px 8px; background: #070707; box-shadow: inset 0 2px 4px rgba(0,0,0,.9); }
 
   .arm { position: absolute; left: 535px; top: 70px; width: 0; height: 0; transform-origin: 0 0; cursor: pointer; will-change: transform;
     transform: translateZ(30px) rotate(0deg); transition: transform 1.1s cubic-bezier(.4, .1, .2, 1); filter: drop-shadow(8px 12px 5px rgba(0,0,0,.5)); }
@@ -192,8 +198,6 @@
   body[data-geo="p"] .arm .head { left: -12px; top: 224px; width: 24px; height: 28px; }
   body[data-geo="p"] .startbtn { left: 22px; top: 446px; }
   body[data-geo="p"] .led { left: 116px; top: 464px; }
-  body[data-geo="p"] .tag { left: 134px; top: 455px; }
-  body[data-geo="p"] .knob { left: 296px; top: 436px; width: 50px; height: 50px; }
 
   #info { position: relative; z-index: 2; width: min(560px, 94%); flex: none; display: flex; flex-direction: column; align-items: center; }
   .meta { text-align: left; padding: 0 18px; margin-top: 10px; width: 100%; }
@@ -231,7 +235,7 @@
   body[data-layout="pp"] .vol { display: none; }
   /* 폰 세로: 받침대 상자를 없애고 LP·톤암만 깔끔하게 */
   body[data-layout="pp"] .plinth, body[data-layout="pp"] .platter, body[data-layout="pp"] .mount,
-  body[data-layout="pp"] .startbtn, body[data-layout="pp"] .led, body[data-layout="pp"] .tag, body[data-layout="pp"] .knob { display: none; }
+  body[data-layout="pp"] .startbtn, body[data-layout="pp"] .led, body[data-layout="pp"] .pitch, body[data-layout="pp"] .rest { display: none; }
   body[data-layout="pp"] .record { box-shadow: 0 0 0 4px #070707, 0 14px 34px rgba(0,0,0,.65), 0 0 0 0 var(--glow); }
   body[data-layout="pp"] .scene.playing .record { box-shadow: 0 0 0 4px #070707, 0 14px 34px rgba(0,0,0,.65), 0 0 50px 6px var(--glow); }
   body[data-layout="pp"] .plinth { box-shadow: 0 16px 30px rgba(0,0,0,.55), 0 0 0 0 var(--glow2), inset 0 0 0 2px rgba(255,255,255,.07); }
@@ -346,8 +350,8 @@
         <div class="mount"></div>
         <button class="startbtn" id="startBtn">START · STOP</button>
         <div class="led" id="led"></div>
-        <div class="tag">STEREO · 33⅓</div>
-        <div class="knob">33</div>
+        <div class="pitch"><i class="tr"></i><i class="cap"></i></div>
+        <div class="rest"></div>
         <div class="arm" id="arm" title="톤암을 눌러 재생/정지">
           <div class="rod"></div><div class="cw"></div><div class="tube"></div><div class="head"></div><div class="cap"></div><div class="hit"></div>
         </div>
