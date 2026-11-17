@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-PQn495ZF8uEELZDYnG2C2nQJZxOg5XhRncWLZuxy4lM=' https://sdk.scdn.co; style-src 'sha256-5SkRrKiEsZl2Ouz3kP2GiupRWtFgwqRStQ4WfBJBUdQ=' 'sha256-ZX2K51zhcxkHSC+EdVrMc1lzPDkGMmk8bJGYhwtc+TU='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hxF0hdl6GNAKkdDAi7YXu7thq13HlHxo8d773+0ouV0=' https://sdk.scdn.co; style-src 'sha256-klz8vIxm6aNfptXG7Sra8sozpMppTvEOW2BNM0qcHmo=' 'sha256-TszCSj3JywgMIp2/pxbKDcWFuEo7tR95/t/sFHVg9BM='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -146,9 +146,12 @@
     box-shadow: 0 0 0 5px #070707, 0 6px 14px rgba(0,0,0,.6), 0 0 0 0 var(--glow);
     transition: box-shadow 1.4s ease; transform: translateZ(12px); }
   .scene.playing .record { box-shadow: 0 0 0 5px #070707, 0 6px 14px rgba(0,0,0,.6), 0 0 44px 4px var(--glow); }
-  .label { position: absolute; inset: 33%; border-radius: 50%; background: var(--accent) center / cover no-repeat; box-shadow: 0 0 0 2px rgba(0,0,0,.45), inset 0 0 14px rgba(0,0,0,.35); }
-  .label::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, transparent 0 20%, rgba(0,0,0,.18) 21% 100%); }
-  .hole { position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; transform: translate(-50%, -50%); border-radius: 50%;
+  .label { position: absolute; inset: 0; border-radius: 50%; background: var(--accent) center / cover no-repeat; }
+  .label::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: repeating-radial-gradient(circle, rgba(0,0,0,.07) 0 1px, rgba(255,255,255,.025) 1px 2.4px), radial-gradient(circle, transparent 60%, rgba(0,0,0,.28) 100%); }
+  .record::after { content: ""; position: absolute; inset: 32%; border-radius: 50%; pointer-events: none;
+    background: repeating-radial-gradient(circle, #0b0b0b 0 1.1px, #1a1a1a 1.1px 2.3px); box-shadow: 0 0 0 3px #050505, inset 0 0 14px rgba(0,0,0,.6); }
+  .hole { position: absolute; z-index: 2; left: 50%; top: 50%; width: 12px; height: 12px; transform: translate(-50%, -50%); border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fafafa, #8c8c8c); box-shadow: 0 1px 3px rgba(0,0,0,.8); }
   .sheen { position: absolute; left: 70px; top: 80px; width: 400px; height: 400px; border-radius: 50%; pointer-events: none;
     background: conic-gradient(from 25deg, transparent 0deg, rgba(255,255,255,.11) 22deg, transparent 48deg, transparent 180deg, rgba(255,255,255,.08) 202deg, transparent 228deg);
@@ -849,7 +852,7 @@ function fit() {
   const aw = w - sf.l - sf.r; let s;
   if (pp) s = Math.min(aw / sw * 0.96, (h - sf.t - sf.b - hh - 34 - 190) / sh, 1.2);
   else if (pl) s = Math.min((h - sf.t - sf.b - hh - 8) / sh, aw * 0.55 / sw);
-  else s = Math.min((aw - 16) / (sw + 40), (h - sf.t - sf.b - hh - 205) / sh, 1.5);
+  else s = Math.min((aw - 16) / (sw + 40), (h - sf.t - sf.b - hh - 245) / sh, 1.5);
   R.setProperty('--s', Math.max(0.3, s).toFixed(3));
   R.setProperty('--rx', (pp ? 0 : pl ? 12 : 18) + 'deg');
   ARM_START = pp ? 6 : 19; ARM_END = pp ? 26 : 38;
@@ -1146,8 +1149,10 @@ const MINI_CSS = `
       radial-gradient(circle, transparent 0 70%, rgba(255,255,255,.04) 70.3% 70.9%, transparent 71.2%),
       repeating-radial-gradient(circle, #0b0b0b 0 1px, #1a1a1a 1px 2.1px);
     box-shadow: 0 0 0 3px #070707, 0 8px 18px rgba(0,0,0,.6); }
-  .lab { position: absolute; inset: 33%; border-radius: 50%; background: var(--accent) center / cover no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.5); }
-  .hole { position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fafafa, #8c8c8c); }
+  .lab { position: absolute; inset: 0; border-radius: 50%; background: var(--accent) center / cover no-repeat; }
+  .rec::after { content: ""; position: absolute; inset: 32%; border-radius: 50%; pointer-events: none;
+    background: repeating-radial-gradient(circle, #0b0b0b 0 1px, #1a1a1a 1px 2.1px); box-shadow: 0 0 0 2px #050505, inset 0 0 10px rgba(0,0,0,.6); }
+  .hole { position: absolute; z-index: 2; left: 50%; top: 50%; width: 7px; height: 7px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fafafa, #8c8c8c); }
   .sheen { position: absolute; left: 10px; top: 20px; width: 220px; height: 220px; border-radius: 50%; pointer-events: none;
     background: conic-gradient(from 25deg, transparent 0deg, rgba(255,255,255,.11) 22deg, transparent 48deg, transparent 180deg, rgba(255,255,255,.08) 202deg, transparent 228deg);
     -webkit-mask: radial-gradient(circle, transparent 0 33%, #000 34%); mask: radial-gradient(circle, transparent 0 33%, #000 34%); }
