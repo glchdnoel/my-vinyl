@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rj6BL1vygNK3jQaevSFnlNoEZJpkwWQxi2RpYuksae4=' https://sdk.scdn.co; style-src 'sha256-6Fq7Dhy227m1nQbgGVMqhuPITtPfCjYRq5nb92zVug8=' 'sha256-VYXW9bbySkY8lhI3nlxoNhRZTctSe+9s4ER80FWDLxo='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-GK8NIUvubrn2G0ZraidfQn2rUDhHecQ7H8SAnOsdAH8=' https://sdk.scdn.co; style-src 'sha256-PNMPkutlRhmlXh9dBjhGE3kTnqJDay5GNBh0ni87mrc=' 'sha256-VYXW9bbySkY8lhI3nlxoNhRZTctSe+9s4ER80FWDLxo='; img-src 'self' data: blob: https://*.scdn.co https://*.spotifycdn.com; media-src blob: data: https://*.scdn.co https://*.spotifycdn.com; connect-src https://api.spotify.com https://accounts.spotify.com https://*.spotify.com wss://*.spotify.com https://*.scdn.co https://*.spotifycdn.com; frame-src https://sdk.scdn.co; worker-src blob:; font-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -110,8 +110,10 @@
     display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 20px 6px 7px; border-radius: 999px;
     background: rgba(20,18,17,.94); border: 1px solid rgba(255,255,255,.12); max-width: 88vw; transition: transform .4s ease; }
   #chip.show { transform: translateX(-50%); }
-  #chip .d { width: 36px; height: 36px; border-radius: 50%; background: #111 center / 60% no-repeat; box-shadow: inset 0 0 0 3px #1a1a1a; will-change: transform; }
+  #chip .d { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #111 center / 60% no-repeat; box-shadow: inset 0 0 0 3px #1a1a1a; will-change: transform; }
   #chip span { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* 알림 바가 떠 있는 동안 보관함 아래쪽에 바 높이(50px)+바 아래 여백(16px)+간격(12px)만큼 자리를 비워 버튼과 겹치지 않게 함 */
+  body.chipon #shelf .caption { padding-bottom: 78px; }
 
   /* ---------- 턴테이블 화면 ---------- */
   #now { display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -220,6 +222,10 @@
   body[data-layout="pl"] .caption .t { font-size: 17px; }
   body[data-layout="pl"] .playbtn { margin-top: 6px; min-height: 44px; }
   body[data-layout="pl"] .caption { padding-bottom: 4px; }
+  /* 폰 가로: 세로 공간이 부족하므로 바를 버튼 아래가 아니라 같은 줄 오른쪽(버튼 옆 빈 공간)에 둠 */
+  body[data-layout="pl"] #chip { left: auto; right: calc(12px + var(--sar)); bottom: calc(1px + var(--sab)); max-width: calc(50% - 112px - var(--sar)); transform: translateY(120px); }
+  body[data-layout="pl"] #chip.show { transform: none; }
+  body[data-layout="pl"].chipon #shelf .caption { padding-bottom: 4px; }
 
   /* ---------- 기기 선택 시트 / 로그인 / 토스트 ---------- */
   #sheet { position: absolute; inset: 0; z-index: 40; display: none; align-items: flex-end; justify-content: center; background: rgba(0,0,0,.55); }
@@ -827,6 +833,9 @@ function fit() {
   R.setProperty('--rx', (pp || pl ? 12 : 18) + 'deg');
   ARM_START = pp ? 6 : 19; ARM_END = pp ? 26 : 38;
   armTo(uiPlaying ? ARM_START + (ARM_END - ARM_START) * progress() : 0);
+  fitFlow();
+}
+function fitFlow() {           // 커버 크기는 커버 영역(.flow)의 실제 높이·너비에 맞춤
   const fw = flow.clientWidth, fh = flow.clientHeight;
   flow.style.setProperty('--cw', Math.round(Math.max(130, Math.min(fh * 0.62, fw * 0.62, 300))) + 'px');
   layout(true);
@@ -858,7 +867,11 @@ function onState(s) {
   if (!(performance.now() < graceUntil && !s.paused !== graceWant)) setUiPlaying(!s.paused);   // 방금 누른 동작과 반대인 오래된 상태는 잠깐 무시
   updateChip(); updateMiniMeta();
 }
-function updateChip() { $('chip').classList.toggle('show', !!ps && $('shelf').classList.contains('active')); }
+function updateChip() {
+  const on = !!ps && $('shelf').classList.contains('active');
+  $('chip').classList.toggle('show', on);
+  if (document.body.classList.contains('chipon') !== on) { document.body.classList.toggle('chipon', on); fitFlow(); }   // 자리가 바뀌면 커버 크기 다시 계산
+}
 $('chip').onclick = () => showView('now');
 
 function setUiPlaying(p) {
